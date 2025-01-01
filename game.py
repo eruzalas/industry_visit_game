@@ -1,6 +1,7 @@
 game = None
 from world import World
 from graphics import window
+import pyglet
 
 class Game():
 	def __init__(self):

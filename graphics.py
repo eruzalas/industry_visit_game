@@ -415,7 +415,7 @@ class GameWindow(pyglet.window.Window):
 		self.cfg = {
 			'WORLD': False,
 			'CAR': False,
-			'GUI': False
+			'GUI': True
 		}
 		#pyglet batches vastly improve rendering efficiency,
 		#and allow us to efficiently turn on and off rendering groups of primitives

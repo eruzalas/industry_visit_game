@@ -1,0 +1,2 @@
+# window parameters W x H
+1600,800
