@@ -8,9 +8,6 @@ class Game():
 		self.world = World(window.size[0], window.size[1])
 		self.world.paused = False
 
-	def input_keyboard(self, symbol, modifiers):
-		self.world.input_keyboard(symbol, modifiers)
-
 	def update(self, delta):
 		self.world.update(delta)
 		

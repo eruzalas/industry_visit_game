@@ -429,6 +429,10 @@ class GameWindow(pyglet.window.Window):
 			'mode':	pyglet.text.Label('', x=200, y=self.height-20, color=COLOUR_NAMES['WHITE']),
 			'status':	pyglet.text.Label('', x=400, y=self.height-20, color=COLOUR_NAMES['WHITE'])
 		}
+
+		self.keys = pyglet.window.key.KeyStateHandler()
+		self.push_handlers(self.keys)
+
 		# add extra event handlers we need
 		self.add_handlers()
 
@@ -445,13 +449,13 @@ class GameWindow(pyglet.window.Window):
 			game.world.cx = cx
 			game.world.cy = cy
 
-
-		@self.event
-		def on_key_press(symbol, modifiers):
+        
+		#@self.event
+		#def on_key_press(symbol, modifiers):
 			# we need to import game here to avoid circular imports
 			# and to make sure that the game object is created before we try to use it
-			from game import game
-			game.input_keyboard(symbol, modifiers)
+			#from game import game
+			#game.input_keyboard(symbol, modifiers)
 
 		@self.event
 		def on_draw():

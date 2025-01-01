@@ -9,23 +9,17 @@ class Player(object):
         self.xpos = x
         self.ypos = y
         self.color = COLOUR_NAMES['PURPLE']
-        self.display = pyglet.shapes.Rectangle(self.xpos, self.ypos, 100, 100, self.color, batch=window.get_batch("gui"))
-        self.keys_pressed = {
-			pyglet.window.key.W: False,
-			pyglet.window.key.A: False,
-			pyglet.window.key.S: False,
-			pyglet.window.key.D: False
-		}
+        self.display = pyglet.shapes.Rectangle(self.xpos, self.ypos, 20, 20, self.color, batch=window.get_batch("gui"))
 
     def update(self, delta):
-        #noth
-        self.money += 1
-
-    def input_keyboard(self, symbol, modifiers):
-        if symbol in self.keys_pressed:
-            self.keys_pressed[symbol] = True
+        if window.keys[pyglet.window.key.W]:
+            self.display.y += 10
             
-	def	input_keyboard_release(self, symbol, modifiers):
-        # Stop moving when the key is released
-        if symbol in self.keys_pressed:
-            self.keys_pressed[symbol] = False
+        if window.keys[pyglet.window.key.A]:
+            self.display.x -= 10
+            
+        if window.keys[pyglet.window.key.S]:
+            self.display.y -= 10
+            
+        if window.keys[pyglet.window.key.D]:
+            self.display.x += 10

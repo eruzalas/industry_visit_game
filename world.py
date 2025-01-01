@@ -25,13 +25,19 @@ class World(object):
     def update(self, delta):
         if not self.paused:
             self.player.update(delta)
-
+            
+    '''
     def input_keyboard(self, symbol, modifiers):
         if symbol == pyglet.window.key.P:
             self.paused = not self.paused
 
-        else:
-            self.player.input_keyboard(symbol, modifiers)
+    def on_key_press(self, symbol, modifiers):
+        self.player.on_key_press(symbol, modifiers)
+
+    def on_key_release(self, symbol, modifiers):
+        self.player.on_key_release(symbol, modifiers)
+    '''
+
 
     def timer_increment(self, delta):
         if not self.paused:
