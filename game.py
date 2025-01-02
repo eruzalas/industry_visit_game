@@ -28,6 +28,8 @@ class Game():
 			generate_map = game_map.Game_Map(entry)
 
 			self.game_maps.append(generate_map)
+			
+		f.close()
 
 	def update(self, delta):
 		if window.keys[pyglet.window.key.M]:

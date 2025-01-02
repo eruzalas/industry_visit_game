@@ -1,1 +1,2 @@
 player,200,200
+wide_road.txt,0,500

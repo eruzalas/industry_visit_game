@@ -1,6 +1,7 @@
 from graphics import window
 import pyglet
 import road
+import random
 
 class Game_Map(object):
     def __init__(self, filename):
@@ -16,7 +17,6 @@ class Game_Map(object):
         filename = "game_files/maps/" + self.filename
         f = open(filename, "r")
         lines = f.readlines()
-        preset = []
 
         for line in lines:
             if len(line) == 0 or line[0] == "#":
@@ -39,10 +39,11 @@ class Game_Map(object):
                 continue
 
             else:
-                preset.extend([xpos, ypos])
-                preset.extend(self.process_preset(entity))
+                preset = self.process_preset(entity)
+                shape = pyglet.shapes.Rectangle(xpos, ypos, preset[0], preset[1], preset[2])
+                self.presets.append(shape)
 
-            self.presets.append(preset)
+        f.close()
 
     def process_road(self, roadfile):
         filename = "game_files/maps/presets/" + roadfile
@@ -62,6 +63,7 @@ class Game_Map(object):
                 length = split[0]
                 width = split[1]
 
+        f.close()
         return [int(length), int(width)]
 
 
@@ -73,9 +75,14 @@ class Game_Map(object):
         length = 0
         width = 0
         color = []
+        is_random = True
 
         for line in lines:
             if len(line) == 0 or line[0] == "#":
+                continue
+
+            if line.rstrip() == "NO":
+                is_random = False
                 continue
             
             split = line.split(',')
@@ -85,6 +92,19 @@ class Game_Map(object):
                 width = split[1]
 
             else:
-                color = [int(split[0]), int(split[1]), int(split[2])]
+                if is_random:
+                    color = []
+                    i = 0
+                    while i < 3:
+                        rand_val = random.randint(int(split[i]) - 10, int(split[i]) + 10)
+                        if rand_val < 0:
+                            rand_val = 0
+                        elif rand_val > 255:
+                            rand_val = 255
+                        color.append(rand_val)
+                        i += 1
+                else:
+                    color = [int(split[0]), int(split[1]), int(split[2])]
 
+        f.close()
         return [int(length), int(width), color]

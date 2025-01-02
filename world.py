@@ -40,14 +40,14 @@ class World(object):
         self.game_obj.clear()
 
         self.player = player.Player(100, 100, gamemap.player_xpos, gamemap.player_ypos, self.cx, self.cy)
-        print(len(gamemap.roads))
+
         if len(gamemap.roads) > 0:
             self.roads = gamemap.roads
             for road in self.roads:
                 for disp in road.display:
-                    disp.batch = window.get_batch("main")
+                    disp.batch = window.get_batch("world")
 
         if len(gamemap.presets) > 0:
-            for obj in gamemap.presets:
-                shape = pyglet.shapes.Rectangle(obj[0], obj[1], obj[2], obj[3], obj[4], batch=window.get_batch("main"))
-                self.game_obj.append(shape)
+            self.game_obj = gamemap.presets
+            for obj in self.game_obj:
+                obj.batch = window.get_batch("main")

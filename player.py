@@ -12,6 +12,10 @@ class Player(object):
         self.display = pyglet.shapes.Rectangle(x, y, 20, 20, self.color, batch=window.get_batch("gui"))
 
     def update(self, delta):
+        if window.keys:
+            self.movement()
+
+    def movement(self):
         if window.keys[pyglet.window.key.W] and self.display.y <= self.worldy - 25:
             self.display.y += 5
             

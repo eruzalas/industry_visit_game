@@ -1,2 +1,10 @@
 player,100,100
-single_road.txt,0,400
+pavement.txt,0,0
+pavement.txt,200,400
+pavement.txt,1050,0
+simple_road.txt,0,600
+small_house.txt,1350,300
+small_house.txt,950,20
+small_house.txt,650,150
+long_house.txt,1250,50
+long_house.txt,900,270

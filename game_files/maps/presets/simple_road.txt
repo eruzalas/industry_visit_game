@@ -1,2 +1,2 @@
 # single road across the screen
-1600,150
+1600,100
