@@ -440,7 +440,6 @@ class GameWindow(pyglet.window.Window):
 		if label in self.labels:
 			self.labels[label].text = text
 
-
 	def add_handlers(self):
 		@self.event
 		#didn't test this... whoops
@@ -449,7 +448,6 @@ class GameWindow(pyglet.window.Window):
 			game.world.cx = cx
 			game.world.cy = cy
 
-        
 		#@self.event
 		#def on_key_press(symbol, modifiers):
 			# we need to import game here to avoid circular imports
