@@ -2,6 +2,7 @@ from graphics import window
 import pyglet
 import road
 import random
+import collision_preset
 
 class Game_Map(object):
     def __init__(self, filename):
@@ -40,7 +41,7 @@ class Game_Map(object):
 
             else:
                 preset = self.process_preset(entity)
-                shape = pyglet.shapes.Rectangle(xpos, ypos, preset[0], preset[1], preset[2])
+                shape = collision_preset.Collision_Preset(xpos, ypos, preset[0], preset[1], preset[2])
                 self.presets.append(shape)
 
         f.close()

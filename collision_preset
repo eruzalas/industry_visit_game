@@ -1,0 +1,26 @@
+import pyglet
+import game
+from graphics import COLOUR_NAMES, window
+
+class Collision_Preset(object):
+    def __init__(self, x, y, width, height, color):
+        self.display = pyglet.shapes.Rectangle(x, y, width, height, color)
+        self.xpos = x
+        self.ypos = y
+        self.width = width
+        self.height = height
+
+    def request_collision_state(self, xpos, ypos):
+        if (self.xpos + self.width <= xpos):
+            return False
+        
+        if (self.xpos >= xpos + self.width):
+            return False
+        
+        if (self.ypos + self.height <= ypos):
+            return False
+        
+        if (self.ypos >= ypos + self.height):
+            return False
+        
+        return True

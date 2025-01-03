@@ -10,6 +10,7 @@ class Player(object):
         self.worldy = cy
         self.color = COLOUR_NAMES['PURPLE']
         self.display = pyglet.shapes.Rectangle(x, y, 20, 20, self.color, batch=window.get_batch("gui"))
+        self.collision_presets = []
 
     def update(self, delta):
         if window.keys:
@@ -27,3 +28,10 @@ class Player(object):
             
         if window.keys[pyglet.window.key.D] and self.display.x <= self.worldx - 25:
             self.display.x += 5
+
+    def request_if_colliding(self):
+        is_collided = False
+        for object in self.collision_presets:
+            is_collided = object.request_collision_state(self.display.x, self.display.y)
+
+        return is_collided

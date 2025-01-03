@@ -50,4 +50,6 @@ class World(object):
         if len(gamemap.presets) > 0:
             self.game_obj = gamemap.presets
             for obj in self.game_obj:
-                obj.batch = window.get_batch("main")
+                obj.display.batch = window.get_batch("main")
+
+        self.player.collision_presets = self.game_obj
