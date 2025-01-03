@@ -2,6 +2,7 @@ player,100,100
 pavement.txt,0,0
 pavement.txt,200,400
 pavement.txt,1050,0
+#road_image.png,0,600
 simple_road.txt,0,600
 small_house.txt,1350,300
 small_house.txt,950,20

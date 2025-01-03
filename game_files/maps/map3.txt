@@ -1,2 +1,3 @@
 player,200,200
 wide_road.txt,0,500
+small_house.txt,1350,200
