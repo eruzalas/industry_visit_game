@@ -12,24 +12,11 @@ class Player(object):
         self.display = pyglet.shapes.Rectangle(x, y, 20, 20, self.color, batch=window.get_batch("gui"))
         self.collision_presets = []
 
+
     def update(self, delta):
         if window.keys:
             self.movement()
 
-    '''
-    def movement(self):
-        if window.keys[pyglet.window.key.W] and self.display.y <= self.worldy - 25:
-            self.display.y += 5
-            
-        if window.keys[pyglet.window.key.A] and self.display.x >= 5:
-            self.display.x -= 5
-            
-        if window.keys[pyglet.window.key.S] and self.display.y >= 5:
-            self.display.y -= 5
-            
-        if window.keys[pyglet.window.key.D] and self.display.x <= self.worldx - 25:
-            self.display.x += 5
-    '''
 
     def movement(self):
         if window.keys[pyglet.window.key.W] and self.display.y <= self.worldy - 25:

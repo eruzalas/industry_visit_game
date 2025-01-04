@@ -1,18 +1,16 @@
 import pyglet
 import game
+from gameobject import GameObject
 from graphics import COLOUR_NAMES, window
 import random
 
-class Collision_Preset(object):
+class Collision_Preset(GameObject):
     def __init__(self, x, y, filename):
-        self.filename = filename
-        self.xpos = x
-        self.ypos = y
-        self.width = 0
-        self.height = 0
+        super().__init__(x, y, filename)
         self.colliding = True
         self.process_preset()
         self.display = pyglet.shapes.Rectangle(x, y, self.width, self.height, self.color)
+
 
     def request_collision_state(self, xpos, ypos):
         if self.colliding:
@@ -29,7 +27,7 @@ class Collision_Preset(object):
                 return False
             
             return True
-    
+
 
     def process_preset(self):
         filename = "game_files/maps/presets/" + self.filename
