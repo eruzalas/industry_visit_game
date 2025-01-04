@@ -33,7 +33,7 @@ class Player(object):
             if self.request_if_colliding():
                 self.display.x += 5
             
-        if window.keys[pyglet.window.key.S] and self.display.y >= 325 and not self.request_if_colliding():
+        if window.keys[pyglet.window.key.S] and self.display.y >= 5 and not self.request_if_colliding():
             self.display.y -= 5
 
             if self.request_if_colliding():

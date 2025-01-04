@@ -1,3 +1,4 @@
+10
 player,300,100
 thin_road.txt,0,500
 thin_road.txt,0,300

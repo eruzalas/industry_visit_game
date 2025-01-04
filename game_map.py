@@ -12,6 +12,8 @@ class Game_Map(object):
         self.roads = []
         self.presets = []
 
+        self.car_limit = 0
+
         self.process_filename()
 
     def process_filename(self):
@@ -19,8 +21,14 @@ class Game_Map(object):
         f = open(filename, "r")
         lines = f.readlines()
 
+        index = 0
         for line in lines:
             if len(line) == 0 or line[0] == "#":
+                continue
+
+            if index == 0:
+                self.car_limit = int(line.rstrip())
+                index += 1
                 continue
 
             line = line.split(',')

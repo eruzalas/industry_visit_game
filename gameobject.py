@@ -12,7 +12,7 @@ class GameObject(object):
         self.display = []
         self.filename = filename
 
-        if "COL" not in self.filename:
+        if "COL" and "car" not in self.filename:
             if "txt" in self.filename:
                 self.process_textbased_preset()
 

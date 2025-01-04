@@ -3,6 +3,7 @@ from graphics import window
 from matrix33 import Matrix33
 from vector2d import Vector2D
 import player
+import car
 
 class World(object):
     def __init__(self, cx, cy):
@@ -13,13 +14,28 @@ class World(object):
 
         self.timer = 0
         self.game_state = "running"
+        self.car_limit = 0
 
         self.game_obj = []
         self.roads = []
+        self.existing_cars = []
         
     def update(self, delta):
         if not self.paused:
             self.player.update(delta)
+            for car in self.existing_cars:
+                status = car.update(delta)
+
+                if not status:
+                    self.existing_cars.remove(car)
+
+            self.check_cars(delta)
+
+    def check_cars(self, delta):
+        if len(self.existing_cars) < self.car_limit and self.timer > 1:
+            self.existing_cars.append(car.Car(0, 0, "car.txt"))
+            self.reset()
+
 
     def timer_increment(self, delta):
         if not self.paused:
@@ -52,4 +68,6 @@ class World(object):
             for obj in self.game_obj:
                 obj.display.batch = window.get_batch("main")
 
+        self.car_limit = gamemap.car_limit
+        
         self.player.collision_presets = self.game_obj
