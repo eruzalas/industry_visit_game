@@ -1,6 +1,7 @@
 import pyglet
 import game
 from graphics import COLOUR_NAMES, window
+import phone_gui
 
 class Player(object):
     def __init__(self, stress, money, x, y, cx, cy):
@@ -11,6 +12,7 @@ class Player(object):
         self.color = COLOUR_NAMES['PURPLE']
         self.display = pyglet.shapes.Rectangle(x, y, 20, 20, self.color, batch=window.get_batch("gui"))
         self.collision_presets = []
+        self.phone = phone_gui.Phone(self)
 
 
     def update(self, delta):
@@ -25,13 +27,13 @@ class Player(object):
             if self.request_if_colliding():
                 self.display.y -= 5
             
-        if window.keys[pyglet.window.key.A] and self.display.x >= 5 and not self.request_if_colliding():
+        if window.keys[pyglet.window.key.A] and self.display.x >= 325 and not self.request_if_colliding():
             self.display.x -= 5
 
             if self.request_if_colliding():
                 self.display.x += 5
             
-        if window.keys[pyglet.window.key.S] and self.display.y >= 5 and not self.request_if_colliding():
+        if window.keys[pyglet.window.key.S] and self.display.y >= 325 and not self.request_if_colliding():
             self.display.y -= 5
 
             if self.request_if_colliding():

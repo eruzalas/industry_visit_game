@@ -12,7 +12,7 @@ class Game():
 		self.game_maps = []
 		self.load_maps()
 
-		self.background = pyglet.shapes.Rectangle(0, 0, window.size[0], window.size[1], (42, 69, 39), batch=window.get_batch("main"))
+		self.background = pyglet.shapes.Rectangle(0, 0, window.size[0], window.size[1], (71, 117, 66), batch=window.get_batch("main"))
 
 		self.world.start(self.game_maps[self.map_stage])
 
