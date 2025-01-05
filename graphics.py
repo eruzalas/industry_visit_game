@@ -448,6 +448,13 @@ class GameWindow(pyglet.window.Window):
 			game.world.cx = cx
 			game.world.cy = cy
 
+		@self.event
+		def on_mouse_press(x, y, button, modifiers):
+			# we need to import game here to avoid circular imports
+			# and to make sure that the game object is created before we try to use it
+			from game import game
+			game.input_mouse(x, y, button, modifiers)
+
 		#@self.event
 		#def on_key_press(symbol, modifiers):
 			# we need to import game here to avoid circular imports

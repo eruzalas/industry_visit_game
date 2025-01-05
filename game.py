@@ -30,6 +30,11 @@ class Game():
 			self.game_maps.append(generate_map)
 			
 		f.close()
+	
+
+	def input_mouse(self, x, y, button, modifiers):
+		self.world.input_mouse(x, y, button, modifiers)
+
 
 	def update(self, delta):
 		if window.keys[pyglet.window.key.M]:
@@ -43,6 +48,7 @@ class Game():
 		
 		elif status == "failed":
 			self.world.reset_current_map()
+
 
 	def update_game_stage(self):
 		if self.map_stage < len(self.game_maps) - 1:

@@ -20,6 +20,8 @@ class World(object):
         self.roads = []
         self.existing_cars = []
         
+        self.special_car_scheduled = False
+        
     def update(self, delta):
         if not self.paused:
             self.player.update(delta)
@@ -33,9 +35,14 @@ class World(object):
 
     def check_cars(self, delta):
         if len(self.existing_cars) < self.car_limit and self.timer > 1:
-            self.existing_cars.append(car.Car(0, 0, "car.txt"))
+            self.existing_cars.append(car.Car(0, 0, "car.txt", self.special_car_scheduled))
+            self.special_car_scheduled = False
             self.reset()
 
+    def input_mouse(self, x, y, button, modifiers):
+        result = self.player.phone.check_mouse(x, y, button)
+        if result:
+            self.special_car_scheduled = True
 
     def timer_increment(self, delta):
         if not self.paused:
