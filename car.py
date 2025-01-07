@@ -5,7 +5,7 @@ from gameobject import GameObject
 from graphics import COLOUR_NAMES, window
 
 class Car(GameObject):
-    def __init__(self, x, y, filename, is_special):
+    def __init__(self, x, y, filename, is_special, roads, player):
         super().__init__(x, y, filename)
         self.roads = []
         self.player = None
@@ -16,6 +16,9 @@ class Car(GameObject):
         if is_special:
             self.color = COLOUR_NAMES["AQUA"]
         self.display = pyglet.shapes.Rectangle(0, 620, 50, 20, self.color, batch=window.get_batch("car"))
+        
+        self.roads = roads
+        self.player = player
 
         if self.direction == 0:
             self.display.x = 270
@@ -23,11 +26,6 @@ class Car(GameObject):
         
         else:
             self.display.x = window.size[0]
-
-
-    def input_to_car(self, roads, player):
-        self.roads = roads
-        self.player = player
 
 
     def update(self, delta):
@@ -40,4 +38,21 @@ class Car(GameObject):
         if self.display.x < 270 or self.display.x > window.size[0]:
             return False
             
+
         return True
+
+
+    def check_collision_with_player(self):
+        pl_xpos = self.player.display.x
+        pl_ypos = self.player.display.y
+
+        ca_xpos = self.display.x
+        ca_ypos = self.display.y
+
+        if ca_xpos + self.display.width <= pl_xpos or ca_xpos >= pl_xpos + 20 or ca_ypos + self.display.height <= pl_ypos or ca_ypos >= pl_ypos + 20:
+            return "no_collision"
+        
+        if self.is_special:
+            return "special"
+        else:
+            return "collision"

@@ -14,6 +14,7 @@ class Player(object):
         self.collision_presets = []
         self.phone = phone_gui.Phone(self)
 
+        self.immunity_frames = 0
 
     def update(self, delta):
         if window.keys:
@@ -44,6 +45,7 @@ class Player(object):
 
             if self.request_if_colliding():
                 self.display.x -= 5
+
 
     def request_if_colliding(self):
         is_collided = False

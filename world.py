@@ -24,18 +24,33 @@ class World(object):
         
     def update(self, delta):
         if not self.paused:
+            if self.player.immunity_frames > 0:
+                self.player.immunity_frames -= 1
+
             self.player.update(delta)
             for car in self.existing_cars:
                 status = car.update(delta)
+
+                if car.check_collision_with_player() == "collision":
+                    if self.player.immunity_frames == 0:
+                        self.player.immunity_frames = 5
+
+                elif car.check_collision_with_player() == "special":
+                    print("successfully got into car!!")
 
                 if not status:
                     self.existing_cars.remove(car)
 
             self.check_cars(delta)
 
+            if self.player.immunity_frames == 5:
+                self.player.stress += 10
+                print("PLAYER STRESS HAS INCREASED TO " + str(self.player.stress))
+
+
     def check_cars(self, delta):
         if len(self.existing_cars) < self.car_limit and self.timer > 1:
-            self.existing_cars.append(car.Car(0, 0, "car.txt", self.special_car_scheduled))
+            self.existing_cars.append(car.Car(0, 0, "car.txt", self.special_car_scheduled, self.roads, self.player))
             self.special_car_scheduled = False
             self.reset()
 
