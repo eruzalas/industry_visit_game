@@ -4,8 +4,8 @@ from graphics import COLOUR_NAMES, window
 import phone_gui
 
 class Player(object):
-    def __init__(self, stress, money, x, y, cx, cy):
-        self.stress = stress
+    def __init__(self, money, x, y, cx, cy):
+        self.stress = 0
         self.money = money
         self.worldx = cx
         self.worldy = cy
@@ -19,6 +19,9 @@ class Player(object):
     def update(self, delta):
         if window.keys:
             self.movement()
+
+        self.phone.display_stress.text = 'Current Stress Level: ' + str(self.stress)
+        self.phone.display_money.text = 'Money Remaining: ' + str(self.money)
 
 
     def movement(self):

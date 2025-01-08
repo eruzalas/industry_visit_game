@@ -47,7 +47,9 @@ class Game():
 			self.update_game_stage()
 		
 		elif status == "failed":
-			self.world.reset_current_map()
+			self.world.reset_player()
+
+		self.world.game_state = "running"
 
 
 	def update_game_stage(self):

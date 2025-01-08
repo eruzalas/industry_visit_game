@@ -9,6 +9,9 @@ class Phone(object):
         self.display = []
         self.order_button = None
         self.generate_static_display()
+
+        self.display_stress = pyglet.text.Label('Loading...', font_size=16, x = 20, y = window.size[1] - 110, anchor_y='center', batch=window.get_batch("gui"), color = (255, 255, 255, 255))
+        self.display_money = pyglet.text.Label('Loading...', font_size=16, x = 20, y = window.size[1] - 160, anchor_y='center', batch=window.get_batch("gui"), color = (255, 255, 255, 255))
         
     def generate_static_display(self):
         self.display.append(pyglet.shapes.Rectangle(0, 0, 320, window.size[1], (0, 0, 0), batch=window.get_batch("gui")))

@@ -12,6 +12,9 @@ class World(object):
         self.paused = True
         self.player = None
 
+        self.initial_pos = []
+        self.initial_money = 0
+
         self.timer = 0
         self.game_state = "running"
         self.car_limit = 0
@@ -36,7 +39,7 @@ class World(object):
                         self.player.immunity_frames = 5
 
                 elif car.check_collision_with_player() == "special":
-                    print("successfully got into car!!")
+                    self.game_state = "passed"
 
                 if not status:
                     self.existing_cars.remove(car)
@@ -67,17 +70,34 @@ class World(object):
         self.timer = 0
 
     def check_game_state(self):
+        if self.player.stress >= 100:
+            self.game_state = "failed"
+
         return self.game_state
     
     def reset_current_map(self):
-        print("RESETTING")
+        self.start()
+
+    def reset_player(self):
+        self.player.display.x = self.initial_pos[0]
+        self.player.display.y = self.initial_pos[1]
+        self.player.stress = 0
+        self.player.money = self.initial_money
+        self.special_car_scheduled = False
+        
+        self.existing_cars.clear()
 
     def start(self, gamemap):
         self.player = None
+        self.special_car_scheduled = False
         self.roads.clear()
         self.game_obj.clear()
+        self.existing_cars.clear()
 
-        self.player = player.Player(100, 100, gamemap.player_xpos, gamemap.player_ypos, self.cx, self.cy)
+        self.initial_pos = [gamemap.player_xpos, gamemap.player_ypos]
+        self.initial_money = 100
+
+        self.player = player.Player(100, gamemap.player_xpos, gamemap.player_ypos, self.cx, self.cy)
 
         if len(gamemap.roads) > 0:
             self.roads = gamemap.roads
