@@ -1,5 +1,7 @@
 5
 player,450,100
++,660
+-,620
 COL_pavement.txt,0,0
 COL_pavement.txt,200,400
 COL_pavement.txt,1050,0

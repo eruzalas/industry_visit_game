@@ -14,12 +14,18 @@ class Game_Map(object):
 
         self.car_limit = 0
 
+        self.left_traffic_spawns = []
+        self.right_traffic_spawns = []
+
         self.process_filename()
 
     def process_filename(self):
         filename = "game_files/maps/" + self.filename
         f = open(filename, "r")
         lines = f.readlines()
+
+        xpos = 0
+        ypos = 0
 
         index = 0
         for line in lines:
@@ -33,8 +39,19 @@ class Game_Map(object):
 
             line = line.split(',')
             entity = line[0]
-            xpos = int(line[1])
-            ypos = int(line[2])
+
+            if len(line) == 2:
+                if entity == "+":
+                    self.left_traffic_spawns.append(int(line[1]))
+                    
+                else:
+                    self.right_traffic_spawns.append(int(line[1]))
+
+                continue
+
+            else:
+                xpos = int(line[1])
+                ypos = int(line[2])
 
             if entity == "player":
                 self.player_xpos = xpos

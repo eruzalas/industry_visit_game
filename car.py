@@ -5,8 +5,10 @@ from gameobject import GameObject
 from graphics import COLOUR_NAMES, window
 
 class Car(GameObject):
-    def __init__(self, x, y, filename, is_special, roads, player):
+    def __init__(self, x, y, filename, is_special, roads, player, left_spawns, right_spawns):
         super().__init__(x, y, filename)
+        self.left_spawns = left_spawns
+        self.right_spawns = right_spawns
         self.roads = []
         self.player = None
         self.direction = random.randrange(0, 2)
@@ -15,17 +17,24 @@ class Car(GameObject):
         self.color = COLOUR_NAMES[self.colors[random.randrange(0, len(self.colors))]]
         if is_special:
             self.color = COLOUR_NAMES["AQUA"]
-        self.display = pyglet.shapes.Rectangle(0, 620, 50, 20, self.color, batch=window.get_batch("car"))
+        self.display = pyglet.shapes.Rectangle(0, 0, 50, 20, self.color, batch=window.get_batch("car"))
         
         self.roads = roads
         self.player = player
 
         if self.direction == 0:
             self.display.x = 270
-            self.display.y = 660
+            calc_rand = 0
+            if len(self.left_spawns) > 1:
+                calc_rand = random.randrange(0, len(self.left_spawns))
+            self.display.y = self.left_spawns[calc_rand]
         
         else:
             self.display.x = window.size[0]
+            calc_rand = 0
+            if len(self.right_spawns) > 1:
+                calc_rand = random.randrange(0, len(self.right_spawns))
+            self.display.y = self.right_spawns[calc_rand]
 
 
     def update(self, delta):

@@ -1,4 +1,10 @@
-10
-player,300,100
-thin_road.txt,0,500
-thin_road.txt,0,300
+15
+player,800,100
++,562
+-,522
++,362
+-,322
+#thin_road.txt,0,500
+#thin_road.txt,0,300
+road_image.png,0,500
+road_image.png,0,300

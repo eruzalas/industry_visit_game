@@ -53,7 +53,7 @@ class World(object):
 
     def check_cars(self, delta):
         if len(self.existing_cars) < self.car_limit and self.timer > 1:
-            self.existing_cars.append(car.Car(0, 0, "car.txt", self.special_car_scheduled, self.roads, self.player))
+            self.existing_cars.append(car.Car(0, 0, "car.txt", self.special_car_scheduled, self.roads, self.player, self.left_car_spawn, self.right_car_spawn))
             self.special_car_scheduled = False
             self.reset()
 
@@ -88,6 +88,8 @@ class World(object):
         self.existing_cars.clear()
 
     def start(self, gamemap):
+        if self.player != None:
+            self.player.display.batch = None
         self.player = None
         self.special_car_scheduled = False
         self.roads.clear()
@@ -98,6 +100,9 @@ class World(object):
         self.initial_money = 100
 
         self.player = player.Player(100, gamemap.player_xpos, gamemap.player_ypos, self.cx, self.cy)
+
+        self.left_car_spawn = gamemap.left_traffic_spawns
+        self.right_car_spawn = gamemap.right_traffic_spawns
 
         if len(gamemap.roads) > 0:
             self.roads = gamemap.roads
