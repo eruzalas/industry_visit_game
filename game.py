@@ -51,6 +51,8 @@ class Game():
 
 		self.world.game_state = "running"
 
+		if window.keys[pyglet.window.key.R]:
+			self.world.reset_player()
 
 	def update_game_stage(self):
 		if self.map_stage < len(self.game_maps) - 1:

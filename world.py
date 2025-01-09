@@ -3,6 +3,7 @@ from graphics import window
 from matrix33 import Matrix33
 from vector2d import Vector2D
 import player
+import random
 import car
 
 class World(object):
@@ -23,7 +24,7 @@ class World(object):
         self.roads = []
         self.existing_cars = []
         
-        self.special_car_scheduled = False
+        self.special_car_scheduled = -1
         
     def update(self, delta):
         if not self.paused:
@@ -41,10 +42,19 @@ class World(object):
                 elif car.check_collision_with_player() == "special":
                     self.game_state = "passed"
 
-                if not status:
+                if status == "offscreen":
+                    self.existing_cars.remove(car)
+                
+                elif status == "special_offscreen":
+                    self.special_car_scheduled = -1
                     self.existing_cars.remove(car)
 
             self.check_cars(delta)
+
+            if self.special_car_scheduled > 0:
+                self.special_car_scheduled -= 1
+
+            self.player.phone.update_display(self.special_car_scheduled)
 
             if self.player.immunity_frames == 5:
                 self.player.stress += 10
@@ -54,13 +64,15 @@ class World(object):
     def check_cars(self, delta):
         if len(self.existing_cars) < self.car_limit and self.timer > 1:
             self.existing_cars.append(car.Car(0, 0, "car.txt", self.special_car_scheduled, self.roads, self.player, self.left_car_spawn, self.right_car_spawn))
-            self.special_car_scheduled = False
+            if self.special_car_scheduled == 0:
+                self.special_car_scheduled = -2
             self.reset()
 
     def input_mouse(self, x, y, button, modifiers):
         result = self.player.phone.check_mouse(x, y, button)
-        if result:
-            self.special_car_scheduled = True
+        if result and self.special_car_scheduled == -1 and self.player.money >= 10:
+            self.special_car_scheduled = random.randrange(100, 300)
+            self.player.money -= 10
 
     def timer_increment(self, delta):
         if not self.paused:
@@ -83,15 +95,16 @@ class World(object):
         self.player.display.y = self.initial_pos[1]
         self.player.stress = 0
         self.player.money = self.initial_money
-        self.special_car_scheduled = False
+        self.special_car_scheduled = -1
         
         self.existing_cars.clear()
 
     def start(self, gamemap):
         if self.player != None:
+            self.player.phone.reset()
             self.player.display.batch = None
         self.player = None
-        self.special_car_scheduled = False
+        self.special_car_scheduled = -1
         self.roads.clear()
         self.game_obj.clear()
         self.existing_cars.clear()

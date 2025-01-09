@@ -15,7 +15,7 @@ class Car(GameObject):
         self.is_special = is_special
         self.colors = ["RED", "BLUE", "GREEN", "PINK", "GREY", "YELLOW"]
         self.color = COLOUR_NAMES[self.colors[random.randrange(0, len(self.colors))]]
-        if is_special:
+        if is_special == 0:
             self.color = COLOUR_NAMES["AQUA"]
         self.display = pyglet.shapes.Rectangle(0, 0, 50, 20, self.color, batch=window.get_batch("car"))
         
@@ -45,10 +45,12 @@ class Car(GameObject):
             self.display.x -= 10
 
         if self.display.x < 270 or self.display.x > window.size[0]:
-            return False
+            if self.is_special == 0:
+                return "special_offscreen"
             
-
-        return True
+            return "offscreen"
+        
+        return "onscreen"
 
 
     def check_collision_with_player(self):
@@ -61,7 +63,7 @@ class Car(GameObject):
         if ca_xpos + self.display.width <= pl_xpos or ca_xpos >= pl_xpos + 20 or ca_ypos + self.display.height <= pl_ypos or ca_ypos >= pl_ypos + 20:
             return "no_collision"
         
-        if self.is_special:
+        if self.is_special == 0:
             return "special"
         else:
             return "collision"
