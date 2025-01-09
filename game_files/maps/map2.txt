@@ -4,6 +4,16 @@ player,800,100
 -,522
 +,362
 -,322
+COL_pavement.txt,500,0
+COL_pavement.txt,500,400
+COL_pavement.txt,1200,0
+COL_pavement.txt,1200,400
+COL_long_house.txt,1150,20
+COL_small_house.txt,400,20
+COL_small_house.txt,920,620
+COL_small_house.txt,620,620
+COL_small_house.txt,320,620
+COL_long_house.txt,1250,620
 #thin_road.txt,0,500
 #thin_road.txt,0,300
 road_image.png,0,500

@@ -5,7 +5,7 @@ from gameobject import GameObject
 from graphics import COLOUR_NAMES, window
 
 class Car(GameObject):
-    def __init__(self, x, y, filename, is_special, roads, player, left_spawns, right_spawns):
+    def __init__(self, x, y, filename, is_special, roads, player, left_spawns, right_spawns, special_color):
         super().__init__(x, y, filename)
         self.left_spawns = left_spawns
         self.right_spawns = right_spawns
@@ -13,10 +13,11 @@ class Car(GameObject):
         self.player = None
         self.direction = random.randrange(0, 2)
         self.is_special = is_special
-        self.colors = ["RED", "BLUE", "GREEN", "PINK", "GREY", "YELLOW"]
-        self.color = COLOUR_NAMES[self.colors[random.randrange(0, len(self.colors))]]
-        if is_special == 0:
-            self.color = COLOUR_NAMES["AQUA"]
+        self.non_colors = ["RED", "BLUE", "GREEN", "PINK", "GREY", "WHITE"]
+        self.color = COLOUR_NAMES[self.non_colors[random.randrange(0, len(self.non_colors))]]
+
+        if is_special == 0 and special_color != None:
+            self.color = special_color
         self.display = pyglet.shapes.Rectangle(0, 0, 50, 20, self.color, batch=window.get_batch("car"))
         
         self.roads = roads

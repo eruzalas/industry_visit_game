@@ -11,6 +11,8 @@ class Phone(object):
         self.order_text = None
         self.generate_static_display()
 
+        self.car_color_text = pyglet.text.Label('Loading...', font_size=10, x = 160, y = 300, anchor_x='center', anchor_y='center', color = (255, 255, 255, 255))
+
         self.display_stress = pyglet.text.Label('Loading...', font_size=16, x = 20, y = window.size[1] - 110, anchor_y='center', batch=window.get_batch("gui"), color = (255, 255, 255, 255))
         self.display_money = pyglet.text.Label('Loading...', font_size=16, x = 20, y = window.size[1] - 160, anchor_y='center', batch=window.get_batch("gui"), color = (255, 255, 255, 255))
         
@@ -31,6 +33,7 @@ class Phone(object):
             display.batch = None
         self.order_button.batch = None
         self.order_text = None
+        self.car_color_text.batch = None
 
     def check_click_with_button(self, ix, iy, button):
         ex = button.x
@@ -45,6 +48,7 @@ class Phone(object):
         if car_scheduling == -1:
             self.order_text.text = 'ORDER CAR ($10)'
             self.order_button.color = (128, 0, 0, 255)
+            self.car_color_text.batch = None
 
         elif car_scheduling <= 0:
             self.order_text.text = 'CAR HAS ARRIVED'
@@ -57,6 +61,7 @@ class Phone(object):
         if self.player.money < 10 and car_scheduling == -1:
             self.order_text.text = "INSUFFICIENT FUNDS"
             self.order_button.color = (128, 0, 0, 255)
+            self.car_color_text.batch = None
 
 
 # check player input and affect player status

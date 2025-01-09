@@ -1,5 +1,5 @@
 import pyglet
-from graphics import window
+from graphics import window, COLOUR_NAMES
 from matrix33 import Matrix33
 from vector2d import Vector2D
 import player
@@ -25,6 +25,7 @@ class World(object):
         self.existing_cars = []
         
         self.special_car_scheduled = -1
+        self.select_color = None
         
     def update(self, delta):
         if not self.paused:
@@ -63,9 +64,13 @@ class World(object):
 
     def check_cars(self, delta):
         if len(self.existing_cars) < self.car_limit and self.timer > 1:
-            self.existing_cars.append(car.Car(0, 0, "car.txt", self.special_car_scheduled, self.roads, self.player, self.left_car_spawn, self.right_car_spawn))
+            color = self.select_color
+
+            self.existing_cars.append(car.Car(0, 0, "car.txt", self.special_car_scheduled, self.roads, self.player, self.left_car_spawn, self.right_car_spawn, color))
             if self.special_car_scheduled == 0:
                 self.special_car_scheduled = -2
+                self.select_color = None
+
             self.reset()
 
     def input_mouse(self, x, y, button, modifiers):
@@ -73,6 +78,12 @@ class World(object):
         if result and self.special_car_scheduled == -1 and self.player.money >= 10:
             self.special_car_scheduled = random.randrange(100, 300)
             self.player.money -= 10
+            special_colors = ["YELLOW", "AQUA", "ORANGE", "DARK_GREEN", "LIGHT_GREEN", "LIGHT_BLUE"]
+            precolor = special_colors[random.randrange(0, len(special_colors))]
+            color = COLOUR_NAMES[precolor]
+            self.player.phone.car_color_text.text = "ORDERED CAR COLOUR IS: " + precolor
+            self.player.phone.car_color_text.batch = window.get_batch("gui")
+            self.select_color = color
 
     def timer_increment(self, delta):
         if not self.paused:
@@ -112,7 +123,7 @@ class World(object):
         self.initial_pos = [gamemap.player_xpos, gamemap.player_ypos]
         self.initial_money = 100
 
-        self.player = player.Player(100, gamemap.player_xpos, gamemap.player_ypos, self.cx, self.cy)
+        self.player = player.Player(50, gamemap.player_xpos, gamemap.player_ypos, self.cx, self.cy)
 
         self.left_car_spawn = gamemap.left_traffic_spawns
         self.right_car_spawn = gamemap.right_traffic_spawns
