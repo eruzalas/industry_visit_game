@@ -26,6 +26,8 @@ class World(object):
         
         self.special_car_scheduled = -1
         self.select_color = None
+
+        self.display_text = []
         
     def update(self, delta):
         if not self.paused:
@@ -93,8 +95,9 @@ class World(object):
         self.timer = 0
 
     def check_game_state(self):
-        if self.player.stress >= 100:
-            self.game_state = "failed"
+        if not self.paused:
+            if self.player.stress >= 100:
+                self.game_state = "failed"
 
         return self.game_state
     
@@ -120,25 +123,36 @@ class World(object):
         self.game_obj.clear()
         self.existing_cars.clear()
 
-        self.initial_pos = [gamemap.player_xpos, gamemap.player_ypos]
-        self.initial_money = 100
+        if not gamemap.reading_text:
+            self.initial_pos = [gamemap.player_xpos, gamemap.player_ypos]
+            self.initial_money = 100
 
-        self.player = player.Player(50, gamemap.player_xpos, gamemap.player_ypos, self.cx, self.cy)
+            self.player = player.Player(50, gamemap.player_xpos, gamemap.player_ypos, self.cx, self.cy)
 
-        self.left_car_spawn = gamemap.left_traffic_spawns
-        self.right_car_spawn = gamemap.right_traffic_spawns
+            self.left_car_spawn = gamemap.left_traffic_spawns
+            self.right_car_spawn = gamemap.right_traffic_spawns
 
-        if len(gamemap.roads) > 0:
-            self.roads = gamemap.roads
-            for road in self.roads:
-                for disp in road.display:
-                    disp.batch = window.get_batch("world")
+            if len(gamemap.roads) > 0:
+                self.roads = gamemap.roads
+                for road in self.roads:
+                    for disp in road.display:
+                        disp.batch = window.get_batch("world")
 
-        if len(gamemap.presets) > 0:
-            self.game_obj = gamemap.presets
-            for obj in self.game_obj:
-                obj.display.batch = window.get_batch("main")
+            if len(gamemap.presets) > 0:
+                self.game_obj = gamemap.presets
+                for obj in self.game_obj:
+                    obj.display.batch = window.get_batch("main")
 
-        self.car_limit = gamemap.car_limit
-        
-        self.player.collision_presets = self.game_obj
+            self.car_limit = gamemap.car_limit
+            
+            self.player.collision_presets = self.game_obj
+
+        else:
+            offset = window.size[1] - 50
+            self.display_text.append(pyglet.shapes.Rectangle(0, 0, window.size[0], window.size[1], (0, 0, 0), batch=window.get_batch("gui")))
+
+            for text in gamemap.text:
+                self.display_text.append(pyglet.text.Label(text, font_size=20, x = 50, y = offset, anchor_y='center', color = (255, 255, 255, 255), batch=window.get_batch("gui")))
+                offset -= 50
+
+            self.paused = True

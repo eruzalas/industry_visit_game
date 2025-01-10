@@ -1,0 +1,4 @@
+FIN
+Congratulations you won!
+To start again, restart the program.
+I hope you enjoyed this mini-game!
