@@ -147,7 +147,7 @@ class World(object):
         # assign values based off gamemap loaded
         if not gamemap.reading_text:
             self.initial_pos = [gamemap.player_xpos, gamemap.player_ypos]
-            self.initial_money = 100
+            self.initial_money = 50
 
             # generate player
             self.player = player.Player(50, gamemap.player_xpos, gamemap.player_ypos, self.cx, self.cy)
